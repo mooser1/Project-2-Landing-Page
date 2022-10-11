@@ -25,7 +25,7 @@
 const fragment = document.createDocumentFragment();
 const sectionList = document.querySelectorAll('section');
 
-let activeSection = document.querySelector(".your-active-class");
+let activeSection = document.querySelector('.your-active-class');
 let activeNav = document.querySelector('.active-nav');
 /*let scrolling = false;
 let cursor;*/
@@ -67,10 +67,6 @@ function buildNavigation(){
         const newMenuItem = document.createElement('li');
         newMenuItem.innerHTML = `<a class = "menu__link" data-id="${section.id}">${section.dataset.nav}</a>`;
         newMenuItem.id = `nav-${section.id}`;
-        if(activeNav === null) {
-            newMenuItem.classList.add('active-nav');
-            activeNav = newMenuItem;
-        }
         fragment.appendChild(newMenuItem);
     }
     const navBarList = document.getElementById('navbar__list')
@@ -79,16 +75,37 @@ function buildNavigation(){
 
 // Add class 'active' to section when near top of viewport
 function setActiveClass(){
-    for (section of sectionList){
-        if (isInViewport(section) && section !== activeSection){
+    for (const section of sectionList){
+        const nav = document.querySelector(`#nav-${section.id}`)
+        if (isInViewport(section) && section != activeSection) {
             section.classList.add("your-active-class");
-            activeNav.classList.add('active-nav');
+            nav.classList.add('active-nav')
         }else{
             section.classList.remove("your-active-class");
-            activeNav.classList.remove('active-nav');
+            nav.classList.remove('active-nav')
+/*            setActiveSection(section);*/
+/*            setActiveNav(document.querySelector(`#nav-${section.id}`));*/
         }
+        
     }
 }
+// Removes active-section class from previous active section, adds the class to 
+// new active section.
+/*function setActiveSection(section) {
+    activeSection.classList.remove('your-active-class');
+    section.classList.add('your-active-class');
+    activeSection = section;
+}*/
+
+// Removes active-nav class from previous active navigation button, adds the 
+// class to new active navigation button.
+/*function setActiveNav(nav) {
+    activeNav.classList.remove('active-nav');
+    nav.classList.add('active-nav')
+    activeNav = nav;
+}*/
+
+
 
 // Scroll to anchor ID using scrollTO event
 function scrollToElement(event){
